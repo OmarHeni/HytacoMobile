@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resource majorVersion="1" minorVersion="11" useXmlUI="false">
+    <image name="backlog.PNG"  />
+    <image name="Fichier 2.png"  />
+    <image name="Fichier 2R.png"  />
+    <ui name="GUI 1" />
+    <ui name="LoginGUI" />
+    <theme name="Theme">
+        <val key="@includeNativeBool" value="true" />
+        <border key="ContainerP.border" type="line" millimeters="false" thickness="2.0" color="13421772" />
+        <val key="FormL.bgImage" value="backlog.PNG" />
+        <val key="FormL.bgType" value="1" />
+        <val key="LabelL.align" value="4" />
+        <val key="LabelL.margin" value="100.0,0.0,23.0,0.0" />
+        <val key="Tabs.sel#bgImage" value="backlog.PNG" />
+        <val key="Tabs.sel#bgType" value="1" />
+    </theme>
+</resource>
