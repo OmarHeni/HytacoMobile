@@ -47,7 +47,6 @@ public class ServiceUtilisateur {
 
         req.setUrl(url);// Insertion de l'URL de notre demande de connexion
         
-
    req.addArgument("email", email);
    req.addArgument("password", password);
     req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -56,6 +55,9 @@ public class ServiceUtilisateur {
                 if(resultOK = req.getResponseCode() == 200){
         client = parseClient(new String(req.getResponseData()));
 UserSession.setInstace(client);
+        System.out.println(UserSession.getInstace().getClient());
+        System.out.println(UserSession.getInstace().getClient());
+
           Dialog.show("Login", "Succes","ok","cancel");
                 }else {
            Dialog.show("Login", "Verifier vos parametres","ok","cancel");
@@ -86,9 +88,37 @@ UserSession.setInstace(client);
                 if(resultOK = req.getResponseCode() == 200){
                 client = parseClient(new String(req.getResponseData()));
                 
-          Dialog.show("Inscription", "Succes");
+          Dialog.show("Inscription", "Succes","ok","cancel");
                 }else {
-           Dialog.show("Inscription", "Verifier vos parametres");
+           Dialog.show("Inscription", "Verifier vos parametres","ok","cancel");
+    
+                }
+                    //Code HTTP 200 OK
+                req.removeResponseListener(this); //Supprimer cet actionListener
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return resultOK;
+    }
+    public boolean editUtilisateur(Client t) {
+        String url = Statics.BASE_URL + "/EditClient";//création de l'URL
+    req.setUrl(url);// Insertion de l'URL de notre demande de connexion
+   req.addArgument("id",String.valueOf( t.getId()));    
+   req.addArgument("nom", t.getNom());
+   req.addArgument("prenom",t.getPrenom());
+   req.addArgument("email", t.getEmail());
+   req.addArgument("adresse", t.getAdresse());
+   req.addArgument("telephone", String.valueOf(t.getTelephone()));
+          
+
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                if(resultOK = req.getResponseCode() == 200){
+                client = parseClient(new String(req.getResponseData()));
+          Dialog.show("Inscription", "Succes","ok","cancel");
+                }else {
+           Dialog.show("Inscription", "Verifier vos parametres","ok","cancel");
     
                 }
                     //Code HTTP 200 OK
@@ -104,46 +134,27 @@ UserSession.setInstace(client);
         try {
             JSONParser j = new JSONParser();// Instanciation d'un objet JSONParser permettant le parsing du résultat json
 
-            /*
-                On doit convertir notre réponse texte en CharArray à fin de
-            permettre au JSONParser de la lire et la manipuler d'ou vient 
-            l'utilité de new CharArrayReader(json.toCharArray())
             
-            La méthode parse json retourne une MAP<String,Object> ou String est 
-            la clé principale de notre résultat.
-            Dans notre cas la clé principale n'est pas définie cela ne veux pas
-            dire qu'elle est manquante mais plutôt gardée à la valeur par defaut
-            qui est root.
-            En fait c'est la clé de l'objet qui englobe la totalité des objets 
-                    c'est la clé définissant le tableau de tâches.
-            */
             Map<String,Object> obj = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
-            
-              /* Ici on récupère l'objet contenant notre liste dans une liste 
-            d'objets json List<MAP<String,Object>> ou chaque Map est une tâche.               
-            
-            Le format Json impose que l'objet soit définit sous forme
-            de clé valeur avec la valeur elle même peut être un objet Json.
-            Pour cela on utilise la structure Map comme elle est la structure la
-            plus adéquate en Java pour stocker des couples Key/Value.
-            
-            Pour le cas d'un tableau (Json Array) contenant plusieurs objets
-            sa valeur est une liste d'objets Json, donc une liste de Map
-            */
-         
-                //Création des tâches et récupération de leurs données
-                t = new Client();
+                                 System.out.println(jsonText);
+                     System.out.println(obj.get("Telephone").toString());
+                  //   System.out.println(Long.parseLong(obj.get("Telephone")));
+
+                                 t = new Client();
                 float id = Float.parseFloat(obj.get("id").toString());
+                                float telephone = Float.parseFloat(obj.get("Telephone").toString());
+
                 t.setId((int)id);
                 t.setNom(obj.get("nom").toString());
                 t.setPrenom(obj.get("prenom").toString());
                 t.setEmail(obj.get("email").toString());
                 t.setPassword(obj.get("password").toString());
                 t.setAdresse(obj.get("Adresse").toString());
-                t.setTelephone(Integer.parseInt(obj.get("Telephone").toString()));
-                
+                t.setTelephone((int)telephone);
+                t.setImage_name((String) obj.get("imageName"));
                 //Ajouter la tâche extraite de la réponse Json à la liste
-            
+                     System.out.println(t);
+
         } catch (IOException ex) {
             
         }finally{

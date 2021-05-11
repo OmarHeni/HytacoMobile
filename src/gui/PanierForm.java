@@ -40,6 +40,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import javafx.scene.control.DatePicker;
 import jdk.nashorn.internal.parser.DateParser;
+import services.ServiceCommande;
 
 import utils.UserSession;
 
@@ -47,10 +48,10 @@ import utils.UserSession;
  *
  * @author Hassene
  */
-public class PanierForm extends Form {
+public class PanierForm extends BaseForm {
      private Resources theme;
      int total =0 ;
-    public PanierForm() {
+    public PanierForm(Resources res)  {
          updateNetworkThreadCount(2);
 
         theme = UIManager.initFirstTheme("/theme");
@@ -69,7 +70,15 @@ public class PanierForm extends Form {
             Log.sendLogAsync();
             Dialog.show("Connection Error", "There was a networking error in the connection to " + err.getConnectionRequest().getUrl(), "OK", null);
         });        
+         Toolbar tb = new Toolbar(true);
+        setToolbar(tb);
+        getTitleArea().setUIID("Container");
+      
+        getContentPane().setScrollVisible(false);
         
+        super.addSideMenu(theme);
+        
+        tb.addSearchCommand(e -> {});
        setPanier();
     }
     
@@ -99,7 +108,6 @@ public class PanierForm extends Form {
                 title.getAllStyles().setMarginBottom(15);
                                 panier.add(title);
 
-           UserSession.setInstace(new Client());
         UserSession.getInstace().AddLignePanier(new produits(1,1,"Tent","Tent for camping","tent-6048dea807880667130188.jpg",1222,89.0));
         UserSession.getInstace().AddLignePanier(new produits(2,1,"Sleeping Bag","SleepingBag for sleeping","bag-6048debf908b3119444202.jpg",1222,89.0));
               
@@ -161,7 +169,6 @@ public class PanierForm extends Form {
              }
          });
         
-            DatePicker dt = new DatePicker();
             
         lp.addAll(v,lnd,qt,remove);
         panier.add(lp);
@@ -184,13 +191,10 @@ public class PanierForm extends Form {
         
      
             Button finalb = new Button("Finalizer la commande ");
-      finalb.getAllStyles().setBackgroundType(Style.BACKGROUND_GRADIENT_LINEAR_VERTICAL);
-         finalb.getAllStyles().setBackgroundGradientStartColor(ColorUtil.rgb(77, 180, 125),true);
-        finalb.getAllStyles().setBackgroundGradientEndColor(ColorUtil.rgb(77, 180, 125),true);
-        finalb.getAllStyles().setFgColor(WHITE);
-         finalb.getAllStyles().setMargin(11,7,30,56);
-         finalb.getAllStyles().setPadding(3, 3, 0, 0);
-         
+    
+        finalb.addActionListener(l->{
+             ServiceCommande.getInstance().addCommande();
+      });
          
     totalc.addAll(totalsl,livraisonl,totall,finalb);
     
