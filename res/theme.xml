@@ -27,7 +27,6 @@
     <image name="smily.png" type="multi"  />
     <theme name="Theme">
         <val key="@includeNativeBool" value="true" />
-        <border key="ContainerP.border" type="line" millimeters="false" thickness="2.0" color="13421772" />
         <val key="FormL.bgImage" value="backlog.PNG" />
         <val key="FormL.bgType" value="1" />
         <val key="LabelL.align" value="4" />
@@ -38,11 +37,11 @@
     <theme name="Theme1">
         <val key="@includeNativeBool" value="true" />
         <val key="@tabPlacementInt" value="0" />
-        <val key="Activate.bgImage" value="activation-background.jpg" />
+        <val key="Activate.bgImage" value="backlog.PNG" />
         <val key="Activate.bgType" value="33" />
-        <val key="Activate.margin" value="0,0,0,0" />
+        <val key="Activate.margin" value="0.0,0.0,0.0,0.0" />
         <val key="Activate.padUnit" value="0,0,2,0" />
-        <val key="Activate.padding" value="0,3,0,0" />
+        <val key="Activate.padding" value="0.0,3.0,0.0,0.0" />
         <val key="Activate.transparency" value="255" />
         <val key="BottomPad.align" value="4" />
         <val key="BottomPad.fgColor" value="a2a1b8" />
@@ -84,6 +83,7 @@
         <val key="CenterLink.padUnit" value="2,2,2,2" />
         <val key="CenterLink.padding" value="2,2,1,1" />
         <val key="CenterLink.transparency" value="0" />
+        <border key="ContainerPA.border" type="line" millimeters="false" thickness="2.0" color="13421772" />
         <val key="DatePickerDay.align" value="4" />
         <val key="DatePickerDay.fgColor" value="ffffff" />
         <font key="DatePickerDay.font" type="ttf" face="0" style="0" size="0" name="native:MainThin" family="native:MainThin" sizeSettings="3" actualSize="4.5" />
@@ -303,6 +303,7 @@
         <val key="TextFieldL.padding" value="2.0,2.0,2.0,2.0" />
         <val key="TextFieldL.transparency" value="0" />
         <val key="TextHint.align" value="4" />
+        <val key="TextHint.fgColor" value="ffffff" />
         <val key="TextHint.sel#align" value="4" />
         <val key="Title.align" value="4" />
         <val key="Title.fgColor" value="ffffff" />
@@ -327,11 +328,11 @@
         <val key="Toolbar.bgType" value="0" />
         <border key="Toolbar.border" type="empty" />
         <val key="Toolbar.transparency" value="0" />
-        <val key="Welcome.bgImage" value="welcome-background.jpg" />
+        <val key="Welcome.bgImage" value="backlog.PNG" />
         <val key="Welcome.bgType" value="33" />
-        <val key="Welcome.margin" value="0,0,0,0" />
+        <val key="Welcome.margin" value="0.0,0.0,0.0,0.0" />
         <val key="Welcome.padUnit" value="0,0,2,0" />
-        <val key="Welcome.padding" value="0,0,0,0" />
+        <val key="Welcome.padding" value="0.0,0.0,0.0,0.0" />
         <val key="Welcome.transparency" value="255" />
         <val key="WelcomeMessage.align" value="4" />
         <val key="WelcomeMessage.fgColor" value="0" />

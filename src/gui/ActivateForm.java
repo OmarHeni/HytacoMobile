@@ -32,6 +32,8 @@ import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.util.Resources;
+import entites.Client;
+import services.ServiceUtilisateur;
 
 /**
  * Account activation UI
@@ -80,6 +82,7 @@ public class ActivateForm extends BaseForm {
         add(BorderLayout.SOUTH, content);
         signUp.requestFocus();
         signUp.addActionListener(e -> new PanierForm(res).show());
+     
     }
     
 }

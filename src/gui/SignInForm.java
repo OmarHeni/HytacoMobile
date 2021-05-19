@@ -38,6 +38,10 @@ import utils.UserSession;
  * @author Shai Almog
  */
 public class SignInForm extends BaseForm {
+    
+   public static Boolean  login ;
+
+   
 
     public SignInForm(Resources res) {
         super(new BorderLayout());
@@ -77,10 +81,11 @@ public class SignInForm extends BaseForm {
         content.setScrollableY(true);
         add(BorderLayout.SOUTH, content);
         signIn.requestFocus();
-        signIn.addActionListener(e ->   {  ServiceUtilisateur.getInstance().Connect(email.getText(), password.getText());
+        signIn.addActionListener(e ->   { 
+            ServiceUtilisateur.getInstance().Connect(email.getText(), password.getText());
                                     System.out.println(UserSession.getInstace().getClient());
 
-        new ProfileForm(res).show();
+        new PayementForm().show();
 });
     }
     

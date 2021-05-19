@@ -143,6 +143,13 @@ public class produits {
         this.image_name = image_name;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 67 * hash + this.id_produit;
+        return hash;
+    }
+
      @Override
     public boolean equals(Object obj) {
         if (this == obj) {

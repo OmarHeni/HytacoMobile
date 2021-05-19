@@ -4,17 +4,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Hassene/Documents/HytacoMobile/src/services/ServiceCommande.java</file>
-            <file>file:/C:/Users/Hassene/Documents/HytacoMobile/src/gui/PanierForm.java</file>
-            <file>file:/C:/Users/Hassene/Documents/HytacoMobile/src/gui/InscriptionForm.java</file>
-            <file>file:/C:/Users/Hassene/Documents/HytacoMobile/src/gui/SignInForm.java</file>
-            <file>file:/C:/Users/Hassene/Documents/HytacoMobile/src/entites/Client.java</file>
-            <file>file:/C:/Users/Hassene/Documents/HytacoMobile/src/HytacoMobile/MyApplication.java</file>
-            <file>file:/C:/Users/Hassene/Documents/HytacoMobile/src/gui/LoginForm.java</file>
-            <file>file:/C:/Users/Hassene/Documents/HytacoMobile/src/gui/SignUpForm.java</file>
-            <file>file:/C:/Users/Hassene/Documents/HytacoMobile/src/services/ServiceUtilisateur.java</file>
-            <file>file:/C:/Users/Hassene/Documents/HytacoMobile/src/gui/ProfileForm.java</file>
-            <file>file:/C:/Users/Hassene/Documents/HytacoMobile/src/utils/UserSession.java</file>
+            <file>file:/C:/Users/user/Documents/HytacoMobile/src/gui/SignUpForm.java</file>
+            <file>file:/C:/Users/user/Documents/HytacoMobile/src/gui/ActivateForm.java</file>
+            <file>file:/C:/Users/user/Documents/HytacoMobile/src/gui/SignInForm.java</file>
+            <file>file:/C:/Users/user/Documents/HytacoMobile/src/entites/Client.java</file>
+            <file>file:/C:/Users/user/Documents/HytacoMobile/src/gui/PanierForm.java</file>
+            <file>file:/C:/Users/user/Documents/HytacoMobile/src/gui/InscriptionForm.java</file>
+            <file>file:/C:/Users/user/Documents/HytacoMobile/src/services/ServiceUtilisateur.java</file>
         </group>
     </open-files>
 </project-private>

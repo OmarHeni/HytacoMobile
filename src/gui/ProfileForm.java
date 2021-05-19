@@ -63,9 +63,9 @@ public class ProfileForm extends BaseForm {
         tb.addSearchCommand(e -> {});
         Client c = UserSession.getInstace().getClient();
         Image img = res.getImage("profile-background.jpg");
-      /*  Image img=null;
+       /*Image img=null;
         try {
-            img = Image.createImage("file:/C:/Users/Hassene/Documents/Symfony/Hytaco/public/images/properties/" + c.getImage_name()).fill(80, 80);
+            img = Image.createImage("file:/C:/Users/user/Documents/Symfony/Hytaco/public/images/properties/" + c.getImage_name()).fill(80, 80);
         } catch (IOException ex) {
         }*/
         if(img.getHeight() > Display.getInstance().getDisplayHeight() / 3) {
@@ -87,7 +87,7 @@ public class ProfileForm extends BaseForm {
                             GridLayout.encloseIn(3,
                                     facebook,
                                     FlowLayout.encloseCenter(
-                                            new Label(Image.createImage("file:/C:/Users/Hassene/Documents/Symfony/Hytaco/public/images/properties/" + c.getImage_name()).fill(80, 80), "PictureWhiteBackgrond")),
+                                            new Label(Image.createImage("file:/C:/Users/user/Documents/Symfony/Hytaco/public/images/properties/" + c.getImage_name()).fill(80, 80), "PictureWhiteBackgrond")),
                                     twitter
                             )
                     )
@@ -108,11 +108,11 @@ public class ProfileForm extends BaseForm {
         addStringValue("E-Mail", email);
         
         TextField adresse = new TextField(c.getAdresse());
-        nom.setUIID("TextFieldBlack");
+        adresse.setUIID("TextFieldBlack");
         addStringValue("Adresse", adresse);
         
 TextField telephone = new TextField(String.valueOf(c.getTelephone()));
-        nom.setUIID("TextFieldBlack");
+        telephone.setUIID("TextFieldBlack");
         addStringValue("Telephone", telephone);
         /*  signup.addActionListener(l->{
              Client client = new Client(nom.getText(),prenom.getText(),Integer.parseInt(telephone.getText()),adresse.getText(),password.getText(),email.getText(),null,null);

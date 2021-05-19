@@ -85,7 +85,7 @@ public class BaseForm extends Form {
             tb.addComponentToSideMenu(LayeredLayout.encloseIn(
                     sl,
                     FlowLayout.encloseCenterBottom(
-                            new Label(Image.createImage("file:/C:/Users/Hassene/Documents/Symfony/Hytaco/public/images/properties/" + c.getImage_name()).fill(80, 80), "PictureWhiteBackgrond"))
+                            new Label(Image.createImage("file:/C:/Users/user/Documents/Symfony/Hytaco/public/images/properties/" + c.getImage_name()).fill(80, 80), "PictureWhiteBackgrond"))
             ));
         } catch (IOException ex) {
        

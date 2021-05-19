@@ -136,7 +136,7 @@ Container LoginPass = new  Container();
       });
           signin.addActionListener(l->{
                         ServiceUtilisateur.getInstance().Connect(email.getText(), password.getText());
-                           new PanierForm(theme).show();
+                           new PayementForm().show();
                            System.out.println(UserSession.getInstace().getClient());
       });    
       

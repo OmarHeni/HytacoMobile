@@ -14,6 +14,7 @@ import com.codename1.io.NetworkManager;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.events.ActionListener;
 import entites.Client;
+import gui.SignInForm;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class ServiceUtilisateur {
     }
     public boolean Connect(String email,String password){
         String url = Statics.BASE_URL + "/CheckUser";//création de l'URL
-
+Boolean state  = false;
         req.setUrl(url);// Insertion de l'URL de notre demande de connexion
         
    req.addArgument("email", email);
@@ -57,11 +58,11 @@ public class ServiceUtilisateur {
 UserSession.setInstace(client);
         System.out.println(UserSession.getInstace().getClient());
         System.out.println(UserSession.getInstace().getClient());
-
+                    SignInForm.login = true;
           Dialog.show("Login", "Succes","ok","cancel");
                 }else {
            Dialog.show("Login", "Verifier vos parametres","ok","cancel");
-    
+                               SignInForm.login = false;
                 }
                     //Code HTTP 200 OK
                 req.removeResponseListener(this); //Supprimer cet actionListener
@@ -88,7 +89,7 @@ UserSession.setInstace(client);
                 if(resultOK = req.getResponseCode() == 200){
                 client = parseClient(new String(req.getResponseData()));
                 
-          Dialog.show("Inscription", "Succes","ok","cancel");
+           Dialog.show("Inscription", "Succes","ok","cancel");
                 }else {
            Dialog.show("Inscription", "Verifier vos parametres","ok","cancel");
     

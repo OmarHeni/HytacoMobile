@@ -33,6 +33,7 @@ import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.plaf.UIManager;
+import com.codename1.ui.table.TableLayout;
 import com.codename1.ui.util.Resources;
 import entites.Client;
 import entites.produits;
@@ -85,31 +86,27 @@ public class PanierForm extends BaseForm {
    public void setPanier(){
         setLayout(BoxLayout.y());
         Container c1 = new Container(BoxLayout.x());
-        
+        c1.revalidate();
         Label rs = new Label();
         rs.getAllStyles().setPadding(0, 0, 53, 53);
         rs.setIcon(theme.getImage("Fichier 2R.png")) ;
         
         c1.getAllStyles().setBackgroundType(Style.BACKGROUND_GRADIENT_LINEAR_VERTICAL);
-         c1.getAllStyles().setBackgroundGradientStartColor(ColorUtil.rgb(77, 180, 125),true);
+        c1.getAllStyles().setBackgroundGradientStartColor(ColorUtil.rgb(77, 180, 125),true);
         c1.getAllStyles().setBackgroundGradientEndColor(ColorUtil.rgb(77, 180, 125),true);
         rs.getAllStyles().setAlignment(CENTER);
                 c1.add(rs);
 
         Container panier = new Container(BoxLayout.y());
-        panier.setUIID("ContainerP");
-        panier.getAllStyles().setMarginLeft(40);
-        panier.getAllStyles().setMarginRight(40);
-        panier.getAllStyles().setMarginTop(50);
-
+        panier.setUIID("ContainerPA");
         Label title = new Label("Panier");
         title.getAllStyles().setFont(Font.createSystemFont(FACE_SYSTEM, STYLE_BOLD, 13));
         title.getAllStyles().setAlignment(CENTER); 
                 title.getAllStyles().setMarginBottom(15);
                                 panier.add(title);
 
-        UserSession.getInstace().AddLignePanier(new produits(1,1,"Tent","Tent for camping","tent-6048dea807880667130188.jpg",1222,89.0));
-        UserSession.getInstace().AddLignePanier(new produits(2,1,"Sleeping Bag","SleepingBag for sleeping","bag-6048debf908b3119444202.jpg",1222,89.0));
+        UserSession.getInstace().AddLignePanier(new produits(1,1,"Tent","Tent for camping","tent.jpg",1222,89.0));
+        UserSession.getInstace().AddLignePanier(new produits(3,1,"Sleeping Bag","SleepingBag for sleeping SleepingBag for sleeping SleepingBag for sleeping SleepingBag for sleeping SleepingBag for sleeping SleepingBag for sleeping SleepingBag for sleeping ","sleepingbag.jpg",1222,89.0));
               
         HashMap<produits,Integer> prs =   UserSession.getInstace().getPanier();
 
@@ -122,14 +119,14 @@ public class PanierForm extends BaseForm {
         lp.getAllStyles().setMarginLeft(10);
         Label v=null;
             try {
-               Image  img = Image.createImage("file:/C:/Users/Hassene/Documents/Symfony/Hytaco/public/images/properties/" + produit.getImage_name()).fill(80, 80);
+               Image  img = Image.createImage("file:/C:/Users/user/Documents/Symfony/Hytaco/public/images/properties/" + produit.getImage_name()).fill(80, 80);
             v = new Label();
             v.setIcon(img);
             } catch (IOException ex) {
              }
            
             Container lnd = new Container(BoxLayout.y());
-
+lnd.setWidth(30);
   Label nomp = new Label(produit.getNom_produit());
         nomp.getAllStyles().setFont(Font.createSystemFont(FACE_SYSTEM, STYLE_BOLD, SIZE_SMALL));
     nomp.getAllStyles().setFgColor(BLACK);
@@ -176,7 +173,7 @@ public class PanierForm extends BaseForm {
          } 
         
         Container totalc = new Container(BoxLayout.y());
-        totalc.setUIID("ContainerP");
+        totalc.setUIID("ContainerPA");
         totalc.getAllStyles().setMarginLeft(70);
         totalc.getAllStyles().setMarginRight(40);
         totalc.getAllStyles().setMarginTop(4);
@@ -189,15 +186,18 @@ public class PanierForm extends BaseForm {
      totall.setText("Total : "+String.valueOf(total+10));
             totall.getAllStyles().setFont(Font.createSystemFont(FACE_SYSTEM, STYLE_BOLD,CN.SIZE_MEDIUM));
         
-     
             Button finalb = new Button("Finalizer la commande ");
     
         finalb.addActionListener(l->{
              ServiceCommande.getInstance().addCommande();
+            PayementForm pf =  new PayementForm();
+            pf.setStotal(total);
+            pf.show();
+             
       });
          
     totalc.addAll(totalsl,livraisonl,totall,finalb);
-    
+    totalc.setUIID("ContainerP");
         addAll(c1,panier,totalc);
    }
 }

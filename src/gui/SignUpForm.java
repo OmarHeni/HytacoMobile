@@ -19,18 +19,39 @@
 
 package gui;
 
+import com.codename1.capture.Capture;
 import com.codename1.components.FloatingHint;
+import static com.codename1.io.Log.e;
+import java.util.Properties;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
 import com.codename1.ui.Display;
+import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.Label;
+import static com.codename1.ui.TextArea.NUMERIC;
+import static com.codename1.ui.TextArea.PASSWORD;
 import com.codename1.ui.TextField;
 import com.codename1.ui.Toolbar;
+import com.codename1.ui.events.ActionEvent;
+import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.util.Resources;
+import com.sun.mail.smtp.SMTPTransport;
+import entites.Client;
+import java.io.IOException;
+import java.util.Date;
+import com.codename1.io.Util;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import rest.file.uploader.tn.FileUploader;
+import services.ServiceUtilisateur;
 
 /**
  * Signup UI
@@ -38,7 +59,7 @@ import com.codename1.ui.util.Resources;
  * @author Shai Almog
  */
 public class SignUpForm extends BaseForm {
-
+String FileNameInServer;
     public SignUpForm(Resources res) {
         super(new BorderLayout());
         Toolbar tb = new Toolbar(true);
@@ -48,15 +69,61 @@ public class SignUpForm extends BaseForm {
         Form previous = Display.getInstance().getCurrent();
         tb.setBackCommand("", e -> previous.showBack());
         setUIID("SignIn");
-                
-        TextField username = new TextField("", "Username", 20, TextField.ANY);
-        TextField email = new TextField("", "E-Mail", 20, TextField.EMAILADDR);
-        TextField password = new TextField("", "Password", 20, TextField.PASSWORD);
-        TextField confirmPassword = new TextField("", "Confirm Password", 20, TextField.PASSWORD);
-        username.setSingleLineTextArea(false);
+                TextField nom = new TextField();
+        TextField prenom  = new TextField();
+       TextField email = new TextField();
+        TextField password = new TextField();
+         TextField adresse = new TextField();
+        TextField telephone = new TextField();
+        Container h1 = new Container(BoxLayout.x());
+        TextField imagel = new TextField();
+        Button imageb = new Button();
+
+         
+
+        Button picture  = new Button ("Parcourir ") ;
+        picture.setMaterialIcon(FontImage.MATERIAL_CLOUD_UPLOAD);
+        
+     picture.addPointerReleasedListener(new ActionListener(){ 
+        @Override
+      public void actionPerformed (ActionEvent evt ) {
+     try {
+         String imgPath = Capture.capturePhoto(); 
+         String link  = imgPath.toString();
+         int pod = link.indexOf("/",2) ; 
+         String news = link.substring(pod +2 , link.length()) ;        
+         FileUploader fu =  new FileUploader("http://127.0.0.1:8000");
+         System.out.println(news);
+          FileNameInServer = fu.upload(news); 
+         System.out.println(FileNameInServer);
+         
+      //   path.setText(FileNameInServer); 
+         
+          }
+     catch (Exception ex ) {
+ }
+ }
+     });
+        
+        
+        
+         email.setHint("E-mail");
+       password.setHint("Mot de passe");
+       nom.setHint("Nom");
+       prenom.setHint("Prenom");
+       adresse.setHint("Adresse");
+       telephone.setHint("Telephone");
+       password.setConstraint(PASSWORD);
+        telephone.setConstraint(NUMERIC);
         email.setSingleLineTextArea(false);
         password.setSingleLineTextArea(false);
-        confirmPassword.setSingleLineTextArea(false);
+        nom.setSingleLineTextArea(false);
+        prenom.setSingleLineTextArea(false);
+        adresse.setSingleLineTextArea(false);
+        telephone.setSingleLineTextArea(false);
+        password.setSingleLineTextArea(false);
+        
+        
         Button next = new Button("Next");
         Button signIn = new Button("Sign In");
         signIn.addActionListener(e -> previous.showBack());
@@ -65,24 +132,92 @@ public class SignUpForm extends BaseForm {
         
         Container content = BoxLayout.encloseY(
                 new Label("Sign Up", "LogoLabel"),
-                new FloatingHint(username),
+                new FloatingHint(nom),
                 createLineSeparator(),
+                new FloatingHint(prenom),
+                createLineSeparator(),
+                
                 new FloatingHint(email),
                 createLineSeparator(),
                 new FloatingHint(password),
                 createLineSeparator(),
-                new FloatingHint(confirmPassword),
-                createLineSeparator()
+                new FloatingHint(adresse),
+                createLineSeparator(),
+                new FloatingHint(telephone),
+                createLineSeparator(),
+                picture
         );
+        
         content.setScrollableY(true);
         add(BorderLayout.CENTER, content);
         add(BorderLayout.SOUTH, BoxLayout.encloseY(
                 next,
                 FlowLayout.encloseCenter(alreadHaveAnAccount, signIn)
         ));
-        next.requestFocus();
-        next.addActionListener(e -> new ActivateForm(res).show());
         
+        next.requestFocus();
+           signIn.addActionListener(l->{
+         previous.showBack();
+      });
+           
+         next.addActionListener(l->{
+             Client client = new Client(nom.getText(),prenom.getText(),Integer.parseInt(telephone.getText()),adresse.getText(),password.getText(),email.getText(),null,Util.getUUID().toString());
+             ServiceUtilisateur.getInstance().addUtilisateur(client);
+             String text = "Activation de votre compte\n" +
+"veuillez clicker sur le lien ci-dessus pour l'activer  votre compte\n" +
+"http://127.0.0.1:8000/activation/"+ client.getActivation_token();
+            try {
+                sendMail(res,client.getEmail(),text);
+            } catch (MessagingException ex) {
+            }
+              new SignInForm(res).show() ;
+      });
+         
     }
+    public void sendMail(Resources res ,String email,String text) throws MessagingException{
+       try{
+           
+
+
+           Properties props = new Properties();
+       
+            String user = "hytacocampi@gmail.com";
+            String pass = "hytaco123";
+		props.put("mail.transport.protocol", "smtp"); //SMTP Host
+		props.put("mail.smtp.host", "gmail.com"); //TLS Port
+		props.put("mail.smtp.auth", "true"); //enable authentication
+    props.put("mail.smtp.starttls.enable", "true");
+    props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+                Session session;
+           session = Session.getInstance(props,null);
+           
+                MimeMessage msg = new MimeMessage(session);
+
+                 msg.setFrom(new InternetAddress("Verification"));
+                 
+                 msg.setRecipients(Message.RecipientType.TO, email);// msg.setRecipients(Message.RecipientType.TO, email.getText().toString());
+                 
+                 msg.setSubject("Verification");
+                 msg.setSentDate(new Date(System.currentTimeMillis()));
+                 
+                // String code = ServiceUser.getInstance().getPasswordByEmaile(email.getText().toString(), res) ;
+                 msg.setText(text);
+                 
+                 SMTPTransport st = (SMTPTransport) session.getTransport("smtp");
+                 
+                System.out.println(st.isSSL());
+                st.connect("smtp.gmail.com",587 ,user,pass);
+                
+                             System.out.println(st.isSSL());
+
+                 st.sendMessage(msg,msg.getAllRecipients());
+                 System.out.println("server response : "+st.getLastServerResponse());
     
+    
+       }catch(Exception e){
+           e.printStackTrace();
+       }        
+    
+    
+}
 }
