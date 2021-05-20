@@ -51,9 +51,9 @@ import java.util.HashMap;
     public static UserSession getInstace() {
         return instance;
     }
+    
     public static void setInstace(Client client) {
             instance = new UserSession(client);
-        
     }
     
   

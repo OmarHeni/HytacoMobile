@@ -48,6 +48,10 @@ public class produits {
         this.prix_produit =prix_produit ;
         this.image_name =image_name ;
     }
+
+    public produits(int i, int i0, String tent, String tent_for_camping, String tent6048dea807880667130188jpg, int i1, double d) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     /**
      * @return the id_produit
      */
@@ -143,7 +147,14 @@ public class produits {
         this.image_name = image_name;
     }
 
-     @Override
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 31 * hash + this.id_produit;
+        return hash;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -155,7 +166,15 @@ public class produits {
             return false;
         }
         final produits other = (produits) obj;
-        return (other.getId_produit()==this.getId_produit());
+        if (this.id_produit != other.id_produit) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "produits{" + "id_produit=" + id_produit + ", categorie_id=" + categorie_id + ", nom_produit=" + nom_produit + ", description_produit=" + description_produit + ", quantite_produit=" + quantite_produit + ", prix_produit=" + prix_produit + ", image_name=" + image_name + '}';
     }
     
 }

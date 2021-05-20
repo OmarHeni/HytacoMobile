@@ -7,8 +7,6 @@ package gui;
 
 import com.codename1.charts.util.ColorUtil;
 import static com.codename1.charts.util.ColorUtil.BLACK;
-import static com.codename1.charts.util.ColorUtil.WHITE;
-import com.codename1.components.ImageViewer;
 import com.codename1.io.Log;
 import com.codename1.ui.Button;
 import com.codename1.ui.CN;
@@ -21,12 +19,10 @@ import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.Font;
 import com.codename1.ui.FontImage;
-import com.codename1.ui.Form;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
 import com.codename1.ui.TextArea;
 import static com.codename1.ui.TextArea.NUMERIC;
-import com.codename1.ui.TextField;
 import com.codename1.ui.Toolbar;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
@@ -34,12 +30,10 @@ import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
-import entites.Client;
 import entites.produits;
 import java.io.IOException;
 import java.util.HashMap;
-import javafx.scene.control.DatePicker;
-import jdk.nashorn.internal.parser.DateParser;
+import services.ServiceCommande;
 
 import utils.UserSession;
 
@@ -47,10 +41,10 @@ import utils.UserSession;
  *
  * @author Hassene
  */
-public class PanierForm extends Form {
+public class PanierForm extends BaseForm {
      private Resources theme;
      int total =0 ;
-    public PanierForm() {
+    public PanierForm(Resources res)  {
          updateNetworkThreadCount(2);
 
         theme = UIManager.initFirstTheme("/theme");
@@ -69,7 +63,15 @@ public class PanierForm extends Form {
             Log.sendLogAsync();
             Dialog.show("Connection Error", "There was a networking error in the connection to " + err.getConnectionRequest().getUrl(), "OK", null);
         });        
+         Toolbar tb = new Toolbar(true);
+        setToolbar(tb);
+        getTitleArea().setUIID("Container");
+      
+        getContentPane().setScrollVisible(false);
         
+        super.addSideMenu(theme);
+        
+        tb.addSearchCommand(e -> {});
        setPanier();
     }
     
@@ -99,7 +101,6 @@ public class PanierForm extends Form {
                 title.getAllStyles().setMarginBottom(15);
                                 panier.add(title);
 
-           UserSession.setInstace(new Client());
         UserSession.getInstace().AddLignePanier(new produits(1,1,"Tent","Tent for camping","tent-6048dea807880667130188.jpg",1222,89.0));
         UserSession.getInstace().AddLignePanier(new produits(2,1,"Sleeping Bag","SleepingBag for sleeping","bag-6048debf908b3119444202.jpg",1222,89.0));
               
@@ -114,7 +115,7 @@ public class PanierForm extends Form {
         lp.getAllStyles().setMarginLeft(10);
         Label v=null;
             try {
-               Image  img = Image.createImage("file:/C:/Users/Hassene/Documents/Symfony/Hytaco/public/images/properties/" + produit.getImage_name()).fill(80, 80);
+               Image  img = Image.createImage("file:/C:/xampp/web/web/Hytaco/public/images/properties/" + produit.getImage_name()).fill(80, 80);
             v = new Label();
             v.setIcon(img);
             } catch (IOException ex) {
@@ -161,7 +162,6 @@ public class PanierForm extends Form {
              }
          });
         
-            DatePicker dt = new DatePicker();
             
         lp.addAll(v,lnd,qt,remove);
         panier.add(lp);
@@ -184,13 +184,10 @@ public class PanierForm extends Form {
         
      
             Button finalb = new Button("Finalizer la commande ");
-      finalb.getAllStyles().setBackgroundType(Style.BACKGROUND_GRADIENT_LINEAR_VERTICAL);
-         finalb.getAllStyles().setBackgroundGradientStartColor(ColorUtil.rgb(77, 180, 125),true);
-        finalb.getAllStyles().setBackgroundGradientEndColor(ColorUtil.rgb(77, 180, 125),true);
-        finalb.getAllStyles().setFgColor(WHITE);
-         finalb.getAllStyles().setMargin(11,7,30,56);
-         finalb.getAllStyles().setPadding(3, 3, 0, 0);
-         
+    
+        finalb.addActionListener(l->{
+             ServiceCommande.getInstance().addCommande();
+      });
          
     totalc.addAll(totalsl,livraisonl,totall,finalb);
     
