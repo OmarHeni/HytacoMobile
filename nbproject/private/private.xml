@@ -9,8 +9,13 @@
             <file>file:/C:/Users/user/Documents/HytacoMobile/src/gui/SignInForm.java</file>
             <file>file:/C:/Users/user/Documents/HytacoMobile/src/entites/Client.java</file>
             <file>file:/C:/Users/user/Documents/HytacoMobile/src/gui/PanierForm.java</file>
-            <file>file:/C:/Users/user/Documents/HytacoMobile/src/gui/InscriptionForm.java</file>
+            <file>file:/C:/Users/user/Documents/HytacoMobile/src/gui/BaseForm.java</file>
+            <file>file:/C:/Users/user/Documents/HytacoMobile/src/gui/PayementForm.java</file>
+            <file>file:/C:/Users/user/Documents/HytacoMobile/src/gui/AddLivraisonForm.java</file>
             <file>file:/C:/Users/user/Documents/HytacoMobile/src/services/ServiceUtilisateur.java</file>
+            <file>file:/C:/Users/user/Documents/HytacoMobile/src/HytacoMobile/MyApplication.java</file>
+            <file>file:/C:/Users/user/Documents/HytacoMobile/src/services/ServicesLivraisons.java</file>
+            <file>file:/C:/Users/user/Documents/HytacoMobile/src/services/ServiceCommande.java</file>
         </group>
     </open-files>
 </project-private>

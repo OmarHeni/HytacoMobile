@@ -17,6 +17,7 @@ import static com.codename1.ui.CN.SIZE_SMALL;
 import static com.codename1.ui.CN.STYLE_BOLD;
 import static com.codename1.ui.CN.addNetworkErrorListener;
 import static com.codename1.ui.CN.updateNetworkThreadCount;
+import com.codename1.ui.Command;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.Font;
@@ -36,6 +37,7 @@ import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.table.TableLayout;
 import com.codename1.ui.util.Resources;
 import entites.Client;
+import entites.Commande;
 import entites.produits;
 import java.io.IOException;
 import java.util.HashMap;
@@ -126,13 +128,15 @@ public class PanierForm extends BaseForm {
              }
            
             Container lnd = new Container(BoxLayout.y());
-lnd.setWidth(30);
+
+
   Label nomp = new Label(produit.getNom_produit());
         nomp.getAllStyles().setFont(Font.createSystemFont(FACE_SYSTEM, STYLE_BOLD, SIZE_SMALL));
     nomp.getAllStyles().setFgColor(BLACK);
   Label descp = new Label(produit.getDescription_produit());
         descp.getAllStyles().setFont(Font.createSystemFont(FACE_SYSTEM, STYLE_BOLD,SIZE_SMALL));
          descp.getAllStyles().setMarginTop(10);
+         descp.setWidth(30);
     TextArea  qt = new TextArea();
     qt.addDataChangedListener((d,l) ->{
   
@@ -154,6 +158,9 @@ lnd.setWidth(30);
                      remove.getAllStyles().setMarginBottom(4);
         remove.setIcon(FontImage.createMaterial(FontImage.MATERIAL_REMOVE_SHOPPING_CART, remove.getAllStyles()));
         lnd.addAll(nomp,descp);
+        lnd.setPreferredW(105);
+        lnd.revalidate();
+        lnd.repaint();
         remove.addActionListener(new ActionListener() {
              @Override
              public void actionPerformed(ActionEvent l) {
@@ -182,16 +189,19 @@ lnd.setWidth(30);
       totalsl.getAllStyles().setFont(Font.createSystemFont(FACE_SYSTEM, STYLE_BOLD,CN.SIZE_MEDIUM));
       Label livraisonl = new Label("Livraison : 10");
             livraisonl.getAllStyles().setFont(Font.createSystemFont(FACE_SYSTEM, STYLE_BOLD,CN.SIZE_MEDIUM));
-
+livraisonl.getAllStyles().setAlignment(CENTER);
      totall.setText("Total : "+String.valueOf(total+10));
             totall.getAllStyles().setFont(Font.createSystemFont(FACE_SYSTEM, STYLE_BOLD,CN.SIZE_MEDIUM));
-        
+        totall.getAllStyles().setAlignment(CENTER);
+totalsl.getAllStyles().setAlignment(CENTER);
+
             Button finalb = new Button("Finalizer la commande ");
     
         finalb.addActionListener(l->{
-             ServiceCommande.getInstance().addCommande();
+             Commande commande =ServiceCommande.getInstance().addCommande();
             PayementForm pf =  new PayementForm();
             pf.setStotal(total);
+            pf.setCom(commande.getId());
             pf.show();
              
       });

@@ -42,8 +42,12 @@ import services.ServiceCommande;
 public class PayementForm extends BaseForm {
          private Resources theme;
          private int stotal ;
+         private int com ;
 
-
+    public void setCom(int com) {
+        this.com = com;
+    }
+         
     public void setStotal(int stotal) {
         this.stotal = stotal;
     }
@@ -132,6 +136,8 @@ add (c1);
        
        Button payeliv = new Button("Payé à livraison");
        payeliv.addActionListener(l->{
+                     new AddLivraisonForm().show();
+
           /*   Client client = new Client(c.getId(),nom,prenom,Integer.parseInt(telephone),adresse,email,null);
              ServiceUtilisateur.getInstance().editUtilisateur(client);*/
       });
@@ -161,7 +167,10 @@ add (c1);
         Charge a =   Charge.create(chargeParam);
         if(a.getPaid()){
                Dialog.show("Payement", "Succes","ok","cancel");
-          
+          AddLivraisonForm liv = new AddLivraisonForm();
+          ServiceCommande.getInstance().topaye(com);
+          liv.setCom(com);
+          liv.show();
         }
         } catch (StripeException ex) {
         }

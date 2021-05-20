@@ -29,6 +29,7 @@ import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.util.Resources;
+import services.ServiceCommande;
 import services.ServiceUtilisateur;
 import utils.UserSession;
 
@@ -53,7 +54,7 @@ public class SignInForm extends BaseForm {
         }
         getTitleArea().setUIID("Container");
         setUIID("SignIn");
-        
+         ServiceCommande.getInstance().topaye(14);
         add(BorderLayout.NORTH, new Label(res.getImage("Fichier 2.png"), "LogoLabel"));
         
         TextField email = new TextField("", "E-mail", 20, TextField.ANY);

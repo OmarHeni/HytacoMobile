@@ -43,8 +43,25 @@ public class ServiceCommande {
         }
         return instance;
     }
-    
-     public boolean addCommande() {
+     public boolean topaye(int id) {
+         boolean status = false ;
+        String url = Statics.BASE_URL + "/topaye/"+id;//création de l'URL
+ req.setUrl(url);
+        req.setPost(false);
+        req.addResponseListener((l)->{
+             if( req.getResponseCode() == 200){
+                      resultOK = true ;
+                  }else {
+                                      resultOK = false ;
+ 
+             }
+
+        });
+              NetworkManager.getInstance().addToQueueAndWait(req);
+           return    resultOK ;
+              
+     }
+     public Commande addCommande() {
         String url = Statics.BASE_URL + "/AjoutComm";//création de l'URL
                 HashMap<produits,Integer> prs =   UserSession.getInstace().getPanier();
  req.setUrl(url);
@@ -60,7 +77,7 @@ public class ServiceCommande {
             @Override
             public void actionPerformed(NetworkEvent evt) {
                 if(resultOK = req.getResponseCode() == 200){
-               // commande = parseCommande(new String(req.getResponseData()));
+                commande = parseCommande(new String(req.getResponseData()));
                 
           Dialog.show("Ajout Commande", "Succes","ok","cancel");
                 }else {
@@ -72,7 +89,7 @@ public class ServiceCommande {
             }
         });
         NetworkManager.getInstance().addToQueueAndWait(req);
-        return resultOK;
+        return commande;
     }
      
       public Commande parseCommande(String jsonText){
